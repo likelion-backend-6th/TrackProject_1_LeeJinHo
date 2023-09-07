@@ -8,26 +8,122 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
-
     <title>twitter</title>
 </head>
 <style>
-    
+    /* 모달 스타일 */
+    .modal_overlay {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
+    .modal_window {
+        display: none;
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        width: 600px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* 글작성 버튼 스타일 */
+    .write_post_btn {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
 </style>
+
 <body>
-    <div>
-        {% for post in posts %}
-        <div class="border feed_box">
-            <div class="feed_content">
-                <p class="feed_txt"> <b> {{ post.user_id }} </b> {{ post.content }}</p>
-              </div>
-            <div class="feed_like">
-              <p class="feed_txt"> <b>좋아요 {{ post.like_count }}개</b> <button>❤️</button></p>
-              
+    <div style="min-width: 1024px">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">twitter</a>
+    
+            <!-- 검색창 -->
+            <form class="form-inline my-2 my-lg-0 ml-auto">
+                <input class="form-control mr-sm-2" type="search" placeholder="검색" aria-label="검색">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
+            </form>
+    
+            <!-- 회원가입, 로그인/로그아웃 -->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">회원가입</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">로그인/로그아웃</a>
+                </li>
+            </ul>
+    
+            <!-- 글작성 -->
+            <button class="btn btn-primary write_post_btn" id="openModalBtn">글작성</button>
+        </nav>
+    
+        <div class="main_body">
+            <div class="left_body">
+                <div>
+                    {% for post in posts %}
+                    <div class="border feed_box">
+                        <div class="feed_content">
+                            <p class="feed_txt"><b>{{ post.user_id }}</b> {{ post.content }}</p>
+                        </div>
+                        <div class="feed_like">
+                            <p class="feed_txt"><b>좋아요 {{ post.like_count }}개</b> <button>❤️</button></p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
-          </div>
-        {% endfor %}
+        </div>
     </div>
+
+    <!-- 모달 -->
+    <div class="modal_overlay" id="modalOverlay">
+        <div class="modal_window">
+            <!-- 글 작성 폼 -->
+            <form>
+                <div class="form-group">
+                    <label for="postContent">글 작성</label>
+                    <textarea class="form-control" id="postContent" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">작성</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- jQuery 및 Bootstrap 스크립트 추가 -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // 글작성 모달 열기
+            document.getElementById('openModalBtn').addEventListener('click', function () {
+            document.getElementById('modalOverlay').style.display = 'flex';
+            document.querySelector('.modal_window').style.display = 'block';
+        });
+
+        // 글작성 모달 닫기
+        document.querySelector('.modal_overlay').addEventListener('click', function (e) {
+            if (e.target === this) {
+                document.getElementById('modalOverlay').style.display = 'none';
+                document.querySelector('.modal_window').style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
