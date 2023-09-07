@@ -7,7 +7,7 @@ on:
         paths:
           - .github/workflows/CD.yml
           - twitter/**
-          
+
 env:
     IMAGE: ${{ secrets.NCR_REGISTRY }}/twitter
     IMAGE_TAG: ${{ secrets.NCR_REGISTRY }}/twitter:latest
@@ -31,6 +31,12 @@ jobs:
               id: timestamp
               run: echo "timestamp=$(date '+%s')" >> "$GITHUB_OUTPUT"
 
+            - name: Install Docker (if not already installed)
+              run: |
+                if ! command -v docker &> /dev/null; then
+                  curl -fsSL https://get.docker.com -o get-docker.sh
+                  sudo sh get-docker.sh
+                fi
             - name: Build and Push
               uses: docker/build-push-action@v4
               with:
@@ -44,6 +50,12 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
+            - name: Install Docker (if not already installed)
+              run: |
+                if ! command -v docker &> /dev/null; then
+                  curl -fsSL https://get.docker.com -o get-docker.sh
+                  sudo sh get-docker.sh
+                fi
             - name: pull and run image
               uses: appleboy/ssh-action@v1.0.0
               with:
