@@ -10,7 +10,6 @@
           integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
     <title>twitter</title>
 </head>
 <style>
@@ -97,16 +96,16 @@
             <!-- 글 작성 폼 -->
             <form>
                 <div class="form-group">
-                    <label for="postContent">글 작성</label>
-                    <textarea class="form-control" id="postContent" rows="3"></textarea>
+                    <label for="input_feed_content">글 작성</label>
+                    <textarea class="form-control" id="input_feed_content" rows="3"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">작성</button>
+                <button id="button_write_feed" type="button" class="btn btn-primary">작성</button>
             </form>
         </div>
     </div>
 
     <!-- jQuery 및 Bootstrap 스크립트 추가 -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
@@ -124,6 +123,40 @@
                 document.querySelector('.modal_window').style.display = 'none';
             }
         });
+
+        $('#button_write_feed').on('click', () => {
+            const content = $('#input_feed_content').val();
+            const user_id = "rlfwkd"; 
+            const data = {
+                    content: content,
+                    user_id: user_id
+                };
+
+            if (data.content.length <= 0) {
+                alert("글을 작성해주세요.");
+            } else if (data.user_id.length <= 0) {
+                alert("사용자 ID가 없습니다.");
+            } else {
+                writeFeed(data);
+            }
+        });
+
+        function writeFeed(data) {
+            $.ajax({
+                url: "/content/upload",
+                data: data, // JSON 데이터를 직접 전달
+                method: "POST",
+                success: function (data) {
+                    console.log("성공");
+                },
+                error: function (request, status, error) {
+                    console.log("에러");
+                },
+                complete: function () {
+                    location.reload();
+                }
+            });
+        }
     </script>
 </body>
 </html>
