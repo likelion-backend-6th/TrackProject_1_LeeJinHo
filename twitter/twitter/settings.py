@@ -45,6 +45,12 @@ INSTALLED_APPS = [
     "twitter",
 ]
 
+## Third party Apps
+INSTALLED_APPS += [
+    "rest_framework",
+    "drf_spectacular",
+]
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -60,7 +66,7 @@ ROOT_URLCONF = "twitter.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
+        "DIRS": [],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -86,7 +92,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "twitter",
         "USER": "twitter",
-        "PASSWORD": os.getenv("DATABASE_PASSWORD"),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
         "HOST": os.getenv("DATABASE_HOST", "localhost"),
         "PORT": "5432",  # PostgreSQL 포트
     }
@@ -128,6 +134,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = "/var/www/html/static"
 # STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # Default primary key field type
@@ -137,3 +144,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # 유저모델 사용
 AUTH_USER_MODEL = "user.User"
+
+NCP_ACCESS_KEY = os.getenv("NCP_ACCESS_KEY", "")
+NCP_SECRET_KEY = os.getenv("NCP_SECRET_KEY", "")

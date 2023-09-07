@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+  twitter:
+    depends_on:
+      - db
+    container_name: twitter-dc
+    build:
+      context: twitter
+      dockerfile: Dockerfile
+    image: twitter
+    ports:
+      - 8000:8000
+    volumes:
+      - ~/.aws:/root/.aws:ro
+      - ./twitter:/app
+      - "staticfiles:/var/www/html/static"
+    command:
+      - "/start"
+    env_file:
+      - ./.envs/local/django
+      - ./.envs/local/db
+      - ./.envs/local/server
+      - ./.envs/prod/ncp
+    environment:
+      - AWS_SECRET_NAME=like/lion/lecture
+
+  nginx:
+    restart: always
+    depends_on:
+      - twitter
+    container_name: twitter-dc
+    build:
+      context: .
+      dockerfile: Dockerfile.nginx_ubt
+    image: twitter-nginx
+    ports:
+      - "8888:80"
+    volumes:
+      - "staticfiles:/var/www/html/static"
+    env_file:
+      - ./.envs/local/server
+
+  db:
+    image: postgres:15
+    env_file:
+      - ./.envs/local/db
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  staticfiles:
+  postgres_data:
