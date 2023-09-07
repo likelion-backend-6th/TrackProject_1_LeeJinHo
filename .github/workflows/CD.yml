@@ -30,9 +30,10 @@ jobs:
                 password: ${{ secrets.NCR_SECRET_KEY }}
 
             - name: Copy .env file from secrets
-              run: echo "$MY_ENV_CONTENTS" > .env
+              run: |
+                echo "MY_ENV_VAR=${{ secrets.MY_ENV_SECRETS }}" > .env
               env:
-                MY_ENV_CONTENTS: ${{ secrets.MY_ENV_SECRETS }}
+                MY_ENV_SECRETS: ${{ secrets.MY_ENV_SECRETS }}
 
             - name: Get Current Timestamp
               id: timestamp
