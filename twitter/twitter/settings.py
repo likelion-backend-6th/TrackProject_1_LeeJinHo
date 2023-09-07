@@ -66,7 +66,7 @@ ROOT_URLCONF = "twitter.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],  # 템플릿 디렉토리 경로
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
