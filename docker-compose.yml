@@ -14,7 +14,7 @@ services:
     volumes:
       - ~/.aws:/root/.aws:ro
       - ./twitter:/app
-      - "staticfiles:/var/www/html/static"
+      - staticfiles:/var/www/html/static   # 변경된 부분: 로컬 경로 대신 named volume 사용
     command:
       - "/start"
     env_file:
@@ -37,7 +37,7 @@ services:
     ports:
       - "8888:80"
     volumes:
-      - "staticfiles:/var/www/html/static"
+      - staticfiles:/var/www/html/static   # 변경된 부분: 로컬 경로 대신 named volume 사용
     env_file:
       - ./.envs/local/server
 
@@ -51,5 +51,5 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
 volumes:
-  staticfiles:
+  staticfiles:  # named volume 정의
   postgres_data:

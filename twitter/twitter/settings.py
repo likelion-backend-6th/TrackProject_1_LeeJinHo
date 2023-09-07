@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-t3tmi-*z-t@90yu5-9v92m1%idn=gchoq^m-3z(xb$@e_j&-f@"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -93,7 +93,7 @@ DATABASES = {
         "NAME": "twitter",
         "USER": "twitter",
         "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
-        "HOST": os.getenv("DATABASE_HOST", "localhost"),
+        "HOST": os.getenv("DATABASE_HOST", "db"),
         "PORT": "5432",  # PostgreSQL 포트
     }
 }
@@ -135,7 +135,6 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATIC_ROOT = "/var/www/html/static"
-# STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

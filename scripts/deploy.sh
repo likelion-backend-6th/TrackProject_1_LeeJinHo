@@ -17,4 +17,5 @@ source venv/bin/activate
 
 # pip install
 echo "start to install requirements"
+pip install python-dotenv
 pip install -r requirements.txt
