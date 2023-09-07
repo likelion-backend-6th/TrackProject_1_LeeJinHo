@@ -29,7 +29,7 @@ services:
     restart: always
     depends_on:
       - twitter
-    container_name: twitter-dc
+    container_name: twitter-nginx-dc
     build:
       context: .
       dockerfile: Dockerfile.nginx_ubt
