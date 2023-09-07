@@ -52,19 +52,21 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="#">twitter</a>
     
-            <!-- 검색창 -->
-            <form class="form-inline my-2 my-lg-0 ml-auto">
-                <input class="form-control mr-sm-2" type="search" placeholder="검색" aria-label="검색">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
-            </form>
-    
             <!-- 회원가입, 로그인/로그아웃 -->
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">회원가입</a>
+                    {% if user_email %}
+                        <span class="nav-link">{{ user_email }}</span>
+                    {% endif %}
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">로그인/로그아웃</a>
+                    <a class="nav-link" href="{% url 'join' %}">회원가입</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">로그인</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">로그아웃</a>
                 </li>
             </ul>
     
@@ -81,7 +83,10 @@
                             <p class="feed_txt"><b>{{ post.user_id }}</b> {{ post.content }}</p>
                         </div>
                         <div class="feed_like">
-                            <p class="feed_txt"><b>좋아요 {{ post.like_count }}개</b> <button>❤️</button></p>
+                            <p class="feed_txt">
+                                <b>좋아요 {{ post.like_count }}개</b> <button>❤️</button>
+                                <button onclick="deletePost('{{ post.id }}')">삭제</button>
+                            </p>
                         </div>
                     </div>
                     {% endfor %}
@@ -126,10 +131,16 @@
 
         $('#button_write_feed').on('click', () => {
             const content = $('#input_feed_content').val();
-            const user_id = "rlfwkd"; 
+            const user_email = "{{ request.session.email }}";
+            
+            if (user_email=="None") {
+                alert("로그인 후 글을 작성할 수 있습니다.");
+            return;
+            }
+
             const data = {
                     content: content,
-                    user_id: user_id
+                    user_id: user_email
                 };
 
             if (data.content.length <= 0) {
@@ -154,6 +165,22 @@
                 },
                 complete: function () {
                     location.reload();
+                }
+            });
+        }
+
+        function deletePost(postId) {
+            $.ajax({
+                url: "/delete-post/",  // URL을 직접 설정
+                method: "POST",
+                data: { post_id: postId },  // post_id로 수정
+                dataType: "json",
+                success: function (data) {
+                    alert(data.message);
+                    location.reload();
+                },
+                error: function (error) {
+                    alert("글 삭제 실패: " + error.responseJSON.message);
                 }
             });
         }
