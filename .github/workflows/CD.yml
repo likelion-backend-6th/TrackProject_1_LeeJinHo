@@ -69,5 +69,5 @@ jobs:
                     sudo docker stop twitter && docker rm twitter
                     sudo docker run -p 8000:8000 -d --name twitter \
                     -v ~/.aws:/root/.aws:ro \
-                    --env-file .env \
-                    likelion-cr-jh.kr.ncr.ntruss.com/twitter:latest
+                    --env-file ./env \
+                    ${{ secrets.NCR_REGISTRY }}/twitter:latest
