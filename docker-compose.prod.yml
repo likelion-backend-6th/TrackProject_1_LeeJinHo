@@ -33,5 +33,14 @@ services:
     env_file:
       - ./.envs/prod/server
 
+  db:
+    image: postgres:15
+    env_file:
+      - ./.envs/local/db
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 volumes:
   staticfiles:
+  postgres_data:
