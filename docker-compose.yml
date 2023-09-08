@@ -42,7 +42,7 @@ services:
       - ./.envs/local/server
 
   db:
-    image: postgres:15
+    image: postgres:13
     env_file:
       - ./.envs/local/db
     ports:
