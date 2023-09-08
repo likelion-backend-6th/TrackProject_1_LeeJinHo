@@ -93,7 +93,7 @@ DATABASES = {
         "NAME": "twitter",
         "USER": "twitter",
         "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
-        "HOST": os.getenv("DATABASE_HOST", "db"),
+        "HOST": os.getenv("DATABASE_HOST"),
         "PORT": "5432",  # PostgreSQL 포트
     }
 }
