@@ -1,4 +1,4 @@
-## **be-lb-staging-19474257-8dedf138b448.kr.lb.naverncp.com**
+## **DjangoApp 배포 : be-lb-staging-19474257-8dedf138b448.kr.lb.naverncp.com**
 
 ### **1. 백엔드 DB 설계**  
   
@@ -29,6 +29,8 @@
 - 서버에서 환경 변수를 설정하여 중요한 정보를 안전하게 관리합니다.  
   
 ### **6. CICD Pipeline 작성**  
+
+#### **CICD 확인 : https://github.com/bainaryho/DjangoSNS/commits/master**
   
 - GitHub Actions CI/CD 도구를 사용하여 CI/CD 파이프라인을 설정합니다.  
 - 코드가 GitHub 리포지토리에 푸시될 때 테스트를 자동으로 실행하도록 설정합니다.  
