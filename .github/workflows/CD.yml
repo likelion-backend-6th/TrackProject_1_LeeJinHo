@@ -34,6 +34,10 @@ jobs:
                 echo "MY_ENV_VAR=${{ secrets.MY_ENV_SECRETS }}" > .env
               env:
                 MY_ENV_SECRETS: ${{ secrets.MY_ENV_SECRETS }}
+            
+            - name: Copy .env file to Docker container
+              run: |
+                  sudo docker cp .env twitter:/.env
 
             - name: Get Current Timestamp
               id: timestamp
@@ -69,5 +73,5 @@ jobs:
                     sudo docker stop twitter && docker rm twitter
                     sudo docker run -p 8000:8000 -d --name twitter \
                     -v ~/.aws:/root/.aws:ro \
-                    --env-file ./env \
+                    --env-file .env \
                     ${{ secrets.NCR_REGISTRY }}/twitter:latest
