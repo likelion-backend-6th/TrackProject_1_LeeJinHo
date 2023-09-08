@@ -90,8 +90,8 @@ load_dotenv()
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "twitter",
-        "USER": "twitter",
+        "NAME": "postgres",
+        "USER": "postgres",
         "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
         "HOST": os.getenv("DB_HOST", "db"),
         "PORT": "5432",  # PostgreSQL 포트
