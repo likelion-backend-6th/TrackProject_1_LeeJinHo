@@ -1,5 +1,14 @@
 ## **DjangoApp 배포 : be-lb-staging-19474257-8dedf138b448.kr.lb.naverncp.com**
 
+### 라이브러리 버전
+Django 4.2.3  
+postgresql 13  
+gunicorn 21.2.0  
+psycopg2-binary 2.9.7  
+djangorestframework 3.14.0  
+drf-spectacular 0.26.4  
+python-dotenv 0.19.1  
+
 ### **1. 백엔드 DB 설계**  
   
 - Django 모델을 사용하여 게시글과 유저를 생성합니다.  
